@@ -13,6 +13,7 @@ import { UserOrdersComponent } from './components/user-orders/user-orders.compon
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SignupComponent } from './components/signup/signup.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule , 
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
