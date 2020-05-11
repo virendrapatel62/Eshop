@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   form : HTMLFormElement
-  constructor() { }
+  error : string ; 
+  success : string;
+  
+  constructor(private  userService : UserService) { }
 
   ngOnInit(): void {
   }
@@ -29,7 +34,21 @@ export class LoginComponent implements OnInit {
     }
 
     console.log(creadentials);
-    
+    this.userService.login(creadentials)
+    .subscribe(
+      {
+        next : (result)=>{
+          console.log(result );
+          this.success = result.message
+          this.error = undefined
+        } , 
+        error : (responce : HttpErrorResponse)=>{
+          console.log(responce.error);
+          this.success = undefined
+          this.error = responce.error.error.message
+        }
+      }
+    )
     
 
   }

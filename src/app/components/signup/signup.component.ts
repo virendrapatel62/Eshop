@@ -50,8 +50,7 @@ export class SignupComponent implements OnInit {
   createUser(user : User , form : HTMLFormElement){
     this.userService.signup(user).subscribe(
       {
-        next : (result : {message: string})=>{
-          console.log(result);
+        next : (result)=>{
           this.success  = result.message
           this.error = undefined
           form.reset();
