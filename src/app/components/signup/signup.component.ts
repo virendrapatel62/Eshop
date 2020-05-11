@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -13,15 +14,17 @@ export class SignupComponent implements OnInit {
   error : string ;
   success : string;
  
-  constructor(private userService: UserService ) { }
+  constructor(private userService: UserService , private router : Router ) { }
 
   ngOnInit(): void {
   }
 
-  signup(event: Event) {
-    event.preventDefault();
-    console.log(event.target);
-    let form = <HTMLFormElement>event.target
+  navigateToLoginPage(){
+    this.router.navigate(['login'])
+  }
+
+  readValuesFromForm(form: HTMLFormElement){
+    
     let name = (<HTMLInputElement>form.elements.namedItem('name')).value
     let email = (<HTMLInputElement>form.elements.namedItem('email')).value
     let password = (<HTMLInputElement>form.elements.namedItem('password')).value
@@ -34,10 +37,17 @@ export class SignupComponent implements OnInit {
       phone
     };
 
-    console.log({
-      user
-    });
+    return user;
+  }
 
+  signup(event: Event) {
+    event.preventDefault();
+    let form = <HTMLFormElement>event.target;;
+    let user = this.readValuesFromForm(form)
+    this.createUser(user , form );
+  }
+
+  createUser(user : User , form : HTMLFormElement){
     this.userService.signup(user).subscribe(
       {
         next : (result : {message: string})=>{
@@ -45,6 +55,7 @@ export class SignupComponent implements OnInit {
           this.success  = result.message
           this.error = undefined
           form.reset();
+          this.navigateToLoginPage()
         }, 
         error : (responce : HttpErrorResponse)=>{
             console.log(responce);
