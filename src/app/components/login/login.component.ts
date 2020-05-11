@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   error : string ; 
   success : string;
   
-  constructor(private  userService : UserService) { }
+  constructor(private  userService : UserService ,  private router : Router) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,10 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
     this.form = <HTMLFormElement>event.target
     this.readFormValues();
+  }
+
+  navigateToHomePage(){
+    this.router.navigate([''])
   }
 
   readFormValues(){
@@ -41,6 +46,8 @@ export class LoginComponent implements OnInit {
           console.log(result );
           this.success = result.message
           this.error = undefined
+          this.navigateToHomePage()
+
         } , 
         error : (responce : HttpErrorResponse)=>{
           console.log(responce.error);
