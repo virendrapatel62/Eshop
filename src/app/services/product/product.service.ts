@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { UserService } from '../user/user.service';
+import { map } from 'rxjs/operators';
+import { Product } from 'src/app/models/products';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   getAllProductUrl = 'http://localhost/api/products'
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient , private userService : UserService) { }
 
   getAllProducts(){
     return this.http.get(this.getAllProductUrl ,
        {
          headers : {
-            'authorization' : "Bearer" + " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcmVuZHJhQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVlYjhmZjBlYTAxNDY1NmFiODRkZTQ3MiIsInVzZXJUeXBlIjoidXNlciIsImlhdCI6MTU4OTI1NjY4MCwiZXhwIjoxNTg5MjYwMjgwfQ.c7iYl6uro5KT1N-gGJulQ3ihOh9DZah7FDYnoo9UBjA"
+            'authorization' : this.userService.getToken()
          }
       })
+      .pipe(
+        map((result : {count : number , products : Product[]})=>{
+          return result.products
+        })
+      )
+      
   }
-  
 }

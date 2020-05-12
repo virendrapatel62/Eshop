@@ -13,6 +13,14 @@ export class UserService {
   constructor(private http : HttpClient) { }
 
 
+  private saveTokenToLocalStorage(token : string){
+    localStorage.setItem('token' , "Bearer "+ token)
+  }
+
+  getToken(){
+    return localStorage.getItem('token') ? localStorage.getItem('token') : "";
+  }
+
   signup(user : User){
      return this.http.post(this.userSignupUrl , user)
      .pipe(
@@ -24,8 +32,9 @@ export class UserService {
   login(credentials : {email : string , password : string}){
      return this.http.post(this.userLoginUrl , credentials)
      .pipe(
-       map(result=>{
-         return <loginResponce>result
+       map((result : loginResponce)=>{
+         this.saveTokenToLocalStorage(result.token)
+         return result
        })
      )
   }
