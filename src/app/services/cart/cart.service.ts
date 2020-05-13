@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/models/products';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +8,20 @@ import { Product } from 'src/app/models/products';
 export class CartService {
 
   cart  = {};
+  private _cartObservable : Subject<Object>  = new Subject();
   constructor() { 
     if(!this.isCartExists())
       localStorage.setItem('cart' , JSON.stringify(this.cart));
+
+    this.readCartDataFromLocalStorage();
+  }
+
+  readCartDataFromLocalStorage(){
+    this.cart = JSON.parse(localStorage.getItem('cart'));
+  }
+
+  get cartObservable(){
+    return this._cartObservable;
   }
 
   addToCart(product : Product){
@@ -21,6 +33,7 @@ export class CartService {
     }
     // localStorage.setItem()
 
+    this._cartObservable.next(this.cart);
     localStorage.setItem('cart' , JSON.stringify(this.cart));
   }
 
