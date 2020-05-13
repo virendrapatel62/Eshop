@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/models/products';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,14 @@ import { Subject } from 'rxjs';
 export class CartService {
 
   cart  = {};
-  private _cartObservable : Subject<Object>  = new Subject();
+  private _cartObservable : BehaviorSubject<Object> ;
   constructor() { 
     if(!this.isCartExists())
       localStorage.setItem('cart' , JSON.stringify(this.cart));
 
+
     this.readCartDataFromLocalStorage();
+    this._cartObservable = new BehaviorSubject(this.cart)
   }
 
   readCartDataFromLocalStorage(){
