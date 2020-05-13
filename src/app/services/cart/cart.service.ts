@@ -47,6 +47,10 @@ export class CartService {
     }
   }
 
+  getQuantity(product: Product){
+   return this.cart[product._id] ? +this.cart[product._id] : 0 
+  }
+
 
   removeFromCart(product : Product){
 
