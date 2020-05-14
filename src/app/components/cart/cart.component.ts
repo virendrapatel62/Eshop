@@ -29,18 +29,23 @@ export class CartComponent implements OnInit {
 
 
   subcribeCart() {
+    let total = 0;
     this.cartService.cartObservable.subscribe(
       {
         next: (cart) => {
-          this.cartItems = [];
+          
           let observables = []
+          total = 0;
+          if(Object.keys(cart).length == 0){
+            this.cartItems = [] 
+          }
           for (let id in cart) {
             console.log(id);
             observables.push(
               this.productService.getProductById(id)
                 .pipe(
                   map(product => {
-                    this.total += (product.price * cart[id])
+                    total += (product.price * cart[id])
                     let item: CartItem = {
                       product: product,
                       quantity: cart[id]
@@ -53,7 +58,7 @@ export class CartComponent implements OnInit {
 
           forkJoin(observables).subscribe({
             next: (cartItems: CartItem[]) => {
-
+              this.total = total;
               this.cartItems = cartItems
             }
           })
