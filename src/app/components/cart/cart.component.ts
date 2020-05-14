@@ -18,7 +18,8 @@ interface CartItem {
 export class CartComponent implements OnInit {
 
   cart;
-  cartItems: CartItem[];
+  total= 0
+  cartItems: CartItem[]  = [];
 
   constructor(private cartService: CartService, private productService: ProductService) { }
 
@@ -39,6 +40,7 @@ export class CartComponent implements OnInit {
               this.productService.getProductById(id)
                 .pipe(
                   map(product => {
+                    this.total += (product.price * cart[id])
                     let item: CartItem = {
                       product: product,
                       quantity: cart[id]

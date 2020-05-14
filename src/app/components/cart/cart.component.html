@@ -1,4 +1,4 @@
-<div class="container p-3 m-3 mx-auto">
+<div class="container p-3 m-3 mx-auto" *ngIf='cartItems.length!=0;else noItems'>
     <h1 class="display-4">Cart</h1>
     <hr>
     <table class="table mx-auto">
@@ -30,7 +30,7 @@
             <tr class="">
                 <th colspan="2"></th>
                 <th colspan="3">Total</th>
-                <th> ₹ 5630</th>
+                <th> ₹ {{total}}</th>
             </tr>
         </tfoot>
 
@@ -40,3 +40,15 @@
     <hr>
     <hr>
 </div>
+
+
+<ng-template #noItems>
+    <div class="mt-4 pt-4">
+        <div class="jumbotron bg-white border container p-4 mx-auto">
+            <h1 class="display-4">Cart is Empty</h1>
+            <p class="lead">Go to Store to Add Items in Cart</p>
+            <hr class="my-4">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum magnam dolore earum explicabo. Qui illum, quaerat est exercitationem alias rerum velit corporis cupiditate veritatis impedit architecto! Rerum inventore ut expedita.</p>
+        </div>
+    </div>
+</ng-template>
