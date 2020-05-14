@@ -24,4 +24,19 @@ export class ProductService {
       )
       
   }
+
+  getProductById(id : string){
+    return this.http.get(`${this.getAllProductUrl}/${id}` ,
+       {
+         headers : {
+            'authorization' : this.userService.getToken()
+         }
+      })
+      .pipe(
+        map(( result)=>{
+          return <Product>result
+        })
+      )
+      
+  }
 }

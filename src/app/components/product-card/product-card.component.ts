@@ -31,4 +31,15 @@ export class ProductCardComponent implements OnInit {
     this.cartService.addToCart(this.product)
   }
 
+
+  minusQuantity(){
+    this.quantity --;
+    this.cartService.setQuantity(this.product , this.quantity)
+  }
+
+  plusQuantity(){
+    this.quantity++;
+    this.cartService.setQuantity(this.product , this.quantity)
+  }
+
 }

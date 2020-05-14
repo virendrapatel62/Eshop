@@ -22,6 +22,10 @@ export class CartService {
     this.cart = JSON.parse(localStorage.getItem('cart'));
   }
 
+  writeCartDataToLocalStorage(){
+    localStorage.setItem('cart' , JSON.stringify(this.cart))
+  }
+
   get cartObservable(){
     return this._cartObservable;
   }
@@ -49,6 +53,17 @@ export class CartService {
 
   getQuantity(product: Product){
    return this.cart[product._id] ? +this.cart[product._id] : 0 
+  }
+
+  setQuantity(product : Product , quantity : number ){
+      if(quantity < 1){
+        delete this.cart[product._id];
+      }else{
+        this.cart[product._id] = quantity
+      }
+      
+      this.writeCartDataToLocalStorage();
+      this._cartObservable.next(this.cart);
   }
 
 
