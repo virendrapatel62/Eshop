@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/app/models/products';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 
 @Component({
   selector: 'app-store',
@@ -10,14 +11,23 @@ import { Product } from 'src/app/models/products';
 export class StoreComponent implements OnInit {
 
   products : Product[] = [];
-  constructor(private productService : ProductService) { }
+  constructor(private productService : ProductService , 
+    private route : ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
-    this.collectProducts()
+    this.route.queryParamMap.subscribe({
+      next : (paramMap : ParamMap)=>{
+        let categoryId = paramMap.get('category');
+        console.log(categoryId);
+        this.collectProducts({category : categoryId})    
+      }
+    })
+    
   }
 
-  collectProducts(){
-    this.productService.getAllProducts()
+  collectProducts(params){
+    this.productService.getAllProducts(params)
     .subscribe({
       next : (products)=>{
         this.products = products

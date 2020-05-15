@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Category } from 'src/app/models/category';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -10,7 +11,9 @@ import { Category } from 'src/app/models/category';
 })
 export class FilterComponent implements OnInit {
    categories : Category[] = []
-  constructor(private categoryService : CategoryService) { }
+  constructor(private categoryService : CategoryService ,
+     private router :Router
+    ) { }
 
   ngOnInit(): void {
     this.collectAllCategory();
@@ -18,7 +21,12 @@ export class FilterComponent implements OnInit {
 
   categorySelected(category_id : string){
     console.log(category_id);
-    
+    this.router.navigate([''] ,
+     {
+       queryParams : {
+          'category' : category_id
+       }
+     })
   }
 
   collectAllCategory(){
