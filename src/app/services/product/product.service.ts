@@ -17,6 +17,14 @@ export class ProductService {
     if(params['category']){
       query.append('category' , params['category'])
     }
+
+    if(params['min']){
+      query.append('min' , params['min'])
+    }
+
+    if(params['max']){
+      query.append('max' , params['max'])
+    }
     console.log(query.toString());
     
 
