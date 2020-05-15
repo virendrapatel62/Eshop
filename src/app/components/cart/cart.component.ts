@@ -18,29 +18,29 @@ interface CartItem {
 export class CartComponent implements OnInit {
 
   cart;
-  total= 0
-  cartItems: CartItem[]  = [];
-  cartSubscription : Subscription ;
+  total = 0
+  cartItems: CartItem[] = [];
+  cartSubscription: Subscription;
 
   constructor(private cartService: CartService, private productService: ProductService) { }
 
   ngOnInit(): void {
-      this.subcribeCart()
+    this.subcribeCart()
   }
 
   ngOnDestroy(): void {
     this.cartSubscription.unsubscribe()
-}
+  }
   subcribeCart() {
     let total = 0;
-   this.cartSubscription =  this.cartService.cartObservable.subscribe(
+    this.cartSubscription = this.cartService.cartObservable.subscribe(
       {
         next: (cart) => {
           console.log(cart);
           let observables = []
           total = 0;
-          if(Object.keys(cart).length == 0){
-            this.cartItems = [] 
+          if (Object.keys(cart).length == 0) {
+            this.cartItems = []
           }
           for (let id in cart) {
             observables.push(
@@ -68,6 +68,6 @@ export class CartComponent implements OnInit {
       }
     )
   }
-  
+
 
 }

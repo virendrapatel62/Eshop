@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   numberOfItems : number = 0 ;
   isLoggedIn = false;
-  isAdmin: boolean = false;
+  isAdmin$
   constructor(private cartService : CartService ,
     private router : Router, 
     private userService : UserService) { }
@@ -48,12 +48,7 @@ export class HeaderComponent implements OnInit {
 
   cheakAdmin(){
     // cheak user is admin or not 
-    this.userService.isAdmin().subscribe(
-      (isAdmin)=>{
-        this.isAdmin = isAdmin
-        
-      }
-    )
+    this.isAdmin$ = this.userService.isAdmin()
 
   }
 
