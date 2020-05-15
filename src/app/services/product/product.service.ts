@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user/user.service';
 import { map } from 'rxjs/operators';
 import { Product } from 'src/app/models/products';
-import { URLSearchParams } from 'url';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +12,15 @@ export class ProductService {
 
   getAllProducts(params){
     let query = new URLSearchParams();
-    query.append('category' ,params['category'] )
-    query.append('min' ,'12' )
+  
+    
+    if(params['category']){
+      query.append('category' , params['category'])
+    }
     console.log(query.toString());
     
-    return this.http.get(this.getAllProductUrl ,
+
+    return this.http.get(`${this.getAllProductUrl}?${query.toString()}` ,
        {
          headers : {
             'authorization' : this.userService.getToken()
