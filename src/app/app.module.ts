@@ -15,7 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ProductQuantityComponent } from './components/product-quantity/product-quantity.component'
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +34,8 @@ import { ProductQuantityComponent } from './components/product-quantity/product-
   imports: [
     BrowserModule,
     AppRoutingModule , 
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

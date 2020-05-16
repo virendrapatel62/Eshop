@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/products';
 import { ProductService } from 'src/app/services/product/product.service';
 import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 interface CartItem {
   product: Product
@@ -21,8 +22,11 @@ export class CartComponent implements OnInit {
   total = 0
   cartItems: CartItem[] = [];
   cartSubscription: Subscription;
+   modalRef: BsModalRef
 
-  constructor(private cartService: CartService, private productService: ProductService) { }
+  constructor(private cartService: CartService, 
+    private modalService : BsModalService , 
+    private productService: ProductService) { }
 
   ngOnInit(): void {
     this.subcribeCart()
@@ -67,6 +71,22 @@ export class CartComponent implements OnInit {
         }
       }
     )
+  }
+
+
+  //open modal
+  openModal(form){  
+    this.modalRef = this.modalService.show(form ,
+      {
+        animated : true , 
+        class : 'modal-lg'
+      })
+  }
+
+  // checkout 
+  checkOut(){
+    console.log("checkout");
+    
   }
 
 
