@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../user/user.service';
 import { map } from 'rxjs/operators';
 import { Product } from 'src/app/models/products';
@@ -7,53 +7,75 @@ import { Product } from 'src/app/models/products';
   providedIn: 'root'
 })
 export class ProductService {
-  getAllProductUrl = 'http://localhost/api/products'
-  constructor(private http : HttpClient , private userService : UserService) { }
+  productUrl = 'http://localhost/api/products'
+  constructor(private http: HttpClient, private userService: UserService) { }
 
-  getAllProducts(params){
+  getAllProducts(params) {
     let query = new URLSearchParams();
-  
-    
-    if(params['category']){
-      query.append('category' , params['category'])
+
+
+    if (params['category']) {
+      query.append('category', params['category'])
     }
 
-    if(params['min']){
-      query.append('min' , params['min'])
+    if (params['min']) {
+      query.append('min', params['min'])
     }
 
-    if(params['max']){
-      query.append('max' , params['max'])
+    if (params['max']) {
+      query.append('max', params['max'])
     }
     console.log(query.toString());
-    
 
-    return this.http.get(`${this.getAllProductUrl}?${query.toString()}` ,
-       {
-         headers : {
-            'authorization' : this.userService.getToken()
-         }
+
+    return this.http.get(`${this.productUrl}?${query.toString()}`,
+      {
+        headers: {
+          'authorization': this.userService.getToken()
+        }
       })
       .pipe(
-        map((result : {count : number , products : Product[]})=>{
+        map((result: { count: number, products: Product[] }) => {
           return result.products
         })
       )
-      
+
   }
 
-  getProductById(id : string){
-    return this.http.get(`${this.getAllProductUrl}/${id}` ,
-       {
-         headers : {
-            'authorization' : this.userService.getToken()
-         }
+  // get producy by ID
+  getProductById(id: string) {
+    return this.http.get(`${this.productUrl}/${id}`,
+      {
+        headers: {
+          'authorization': this.userService.getToken()
+        }
       })
       .pipe(
-        map(( result)=>{
+        map((result) => {
           return <Product>result
         })
       )
-      
+
+  }
+
+  // saveing product
+  // get producy by ID
+  saveProduct(data : FormData) {
+    let headers = new HttpHeaders({
+      'authorization': this.userService.getToken()
+    })
+    console.log(this.userService.getToken());
+    console.log(headers.get('authorization'));
+    
+    return this.http.post(this.productUrl, data , 
+      {
+        headers
+      })
+      .pipe(
+        map((result : {message : string , product : Product}) => {
+          return <Product>result.product
+        })
+      )
+
   }
 }
