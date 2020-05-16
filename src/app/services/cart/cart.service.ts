@@ -30,6 +30,11 @@ export class CartService {
     return this._cartObservable;
   }
 
+  clearCart(){
+    localStorage.removeItem('cart')
+    this._cartObservable.next({})
+  }
+
   addToCart(product : Product){
     let quantity = this.cart[product._id];
     if(quantity){
@@ -66,8 +71,4 @@ export class CartService {
       this._cartObservable.next(this.cart);
   }
 
-
-  removeFromCart(product : Product){
-
-  }
 }

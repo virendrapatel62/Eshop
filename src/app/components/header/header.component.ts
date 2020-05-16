@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +11,30 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   numberOfItems : number = 0 ;
   isLoggedIn = false;
+  isAdminUrl = false;
   isAdmin$
   constructor(private cartService : CartService ,
     private router : Router, 
-    private userService : UserService) { }
+    private userService : UserService) { 
+
+
+        router.events.subscribe({
+          next : (event)=>{
+            console.log(event);
+            
+            if(event instanceof NavigationStart)
+            {
+              let url = (<NavigationStart>event).url
+                this.isAdminUrl = url.includes('admin')
+            }
+            
+          }
+        })
+    }
 
   ngOnInit(): void {
+
+
     this.cartService.cartObservable.subscribe({
       next : (cart)=>{
         console.log(cart);
