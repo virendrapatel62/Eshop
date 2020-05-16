@@ -18,16 +18,25 @@ export class OrderService {
     })
     return this.http.post(this.orderPlaceUrl , orderInfo , {headers} )
   }
-  getUserOrders(){
+  
+  getUserOrders(all ?: boolean ){
+    let url = this.userAllOrdersUrl;
+    if(all){
+      url = url + '?all=true'
+    }
     let headers = new HttpHeaders({
       'authorization' : this.userService.getToken()
     })
-    return this.http.get(this.userAllOrdersUrl, {headers} ).pipe(
+    return this.http.get(url, {headers} ).pipe(
       map((result : {count : number , orders : Order[]})=>{
         return result.orders
       }
       )
     )
+  }
+
+  getAdminOrders(){
+    return this.getUserOrders(true)
   }
 }
 
