@@ -24,8 +24,19 @@
                 <td>{{order.product.name}}</td>
 
                 <td>{{order.quantity}}</td>
-                <td>₹ {{order.quantity * order.price}}</td>
-                <td>{{order.status}}</td>
+                <td>{{order.quantity * order.price}}</td>
+                <td>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                        <label (click)='changeStatus("pending" , order)' class="btn btn-sm" [class.btn-warning]='order.status=="pending"' [class.btn-light]='order.status!="pending"'>
+                            P
+                        </label>
+                        <label (click)='changeStatus("completed" , order)' class="btn btn-light btn-sm" [class.btn-success]='order.status=="completed"' [class.btn-light]='order.status!="completed"'>
+                            S
+                        </label>
+
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>

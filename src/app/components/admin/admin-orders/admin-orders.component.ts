@@ -19,9 +19,17 @@ export class AdminOrdersComponent implements OnInit {
 
   collectOrders(){
     this.orders$ = this.orderService.getAdminOrders()
-    this.orders$.toPromise().then(r=>{console.log(r);
+  }
+
+  changeStatus(status : string , order :Order){
+    this.orderService.changeStatus({status : status} , order._id)
+    .subscribe({
+      next : result=>{
+        console.log(result);
+        order.status = status
+        
+      }
     })
-    
   }
 
 }
