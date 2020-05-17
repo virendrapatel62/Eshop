@@ -23,9 +23,9 @@
                     <td>{{order.product.name}}</td>
                     <td>{{order.created_at | date}}</td>
                     <td>{{order.address}}</td>
-                    <td>{{order.product.price}}</td>
+                    <td>{{order.product.price | currency :'INR' }}</td>
                     <td>{{order.quantity}}</td>
-                    <td>{{order.quantity * order.product.price}}</td>
+                    <td>{{order.quantity * order.product.price | currency :'INR' }}</td>
                     <td><span class="badge" [class.badge-warning]='order.status=="pending"' [class.badge-success]='order.status=="completed"'>{{order.status}}</span></td>
                 </tr>
             </tbody>

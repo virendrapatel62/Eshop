@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order/order.service';
 import { Observable } from 'rxjs';
 import { Order } from 'src/app/models/order';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-orders',
@@ -10,8 +11,11 @@ import { Order } from 'src/app/models/order';
 })
 export class AdminOrdersComponent implements OnInit {
 
+  modelRef: BsModalRef
+  selectedOrder : Order 
+
   orders$ : Observable<Order[]>;
-  constructor(private orderService : OrderService) { }
+  constructor(private orderService : OrderService , private modalService : BsModalService) { }
 
   ngOnInit(): void {
     this.collectOrders()
@@ -30,6 +34,15 @@ export class AdminOrdersComponent implements OnInit {
         
       }
     })
+  }
+
+  showDetails( order :Order , table){
+    this.selectedOrder = order
+    this.modelRef = this.modalService.show(table , {class : 'modal-lg'})
+  }
+
+  close(){
+    this.modelRef.hide()
   }
 
 }
