@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +12,17 @@ export class LoginComponent implements OnInit {
   form : HTMLFormElement
   error : string ; 
   success : string;
+  returnUrl: string;
   
   
-  constructor(private  userService : UserService ,  private router : Router) { }
+  constructor(private  userService : UserService ,
+    private route : ActivatedRoute, 
+    private router : Router) { }
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params : ParamMap)=>{
+      this.returnUrl = params.get('returnUrl')
+    })
   }
 
   login(event : Event){
@@ -26,7 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToHomePage(){
-    this.router.navigate([''])
+    let url = this.returnUrl ? this.returnUrl : '/';
+    this.router.navigateByUrl(url);
   }
 
   readFormValues(){
