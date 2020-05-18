@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
               let url = (<NavigationStart>event).url
                 this.isAdminUrl = url.includes('/admin')
             }
-            
           }
         })
     }

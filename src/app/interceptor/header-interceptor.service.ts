@@ -22,7 +22,6 @@ export class HeaderInterceptorService implements HttpInterceptor{
     let r = req.clone({
       headers : header
     })
-    console.log(r);
     return next.handle(r).pipe(
       map(result=>{
         console.log(result);
@@ -40,14 +39,21 @@ export class HeaderInterceptorService implements HttpInterceptor{
 
   showProperMessage(err : HttpErrorResponse){
     console.log(this.router.url);
+    console.log(err)
     
-    if(this.router.url.includes('login')){
+    if(err.url.includes('is-admin')){
+      return 
+    }
+    
+    
+    if(this.router.url.includes('login') && err.status != 401 ){
       this.message.show('Invalid Email Or Password !!')
       return 
     }
 
     if(err.status == 401){
       this.message.show('Session Expired.. Please Login Again !!')
+      this.userService.logout()
       this.router.navigate(['login'] , {
         queryParams : {
           'returnUrl' : this.router.url
