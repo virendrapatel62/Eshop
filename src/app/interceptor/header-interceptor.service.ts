@@ -4,16 +4,19 @@ import { UserService } from '../services/user/user.service';
 import { map, catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { NotificationService } from '../services/notification/notification.service';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeaderInterceptorService implements HttpInterceptor{
 
+ 
   constructor(private userService : UserService , 
-    private message : NotificationService , private zone : NgZone) { }
+    private message : NotificationService , 
+    private router : Router) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    
+   
     let header = req.headers.set('authorization' ,
      this.userService.getToken())
     let r = req.clone({
@@ -26,14 +29,34 @@ export class HeaderInterceptorService implements HttpInterceptor{
         return result;
       }), 
       catchError(
-        (err)=>{
-          this.zone.run(()=>{
-            this.message.show("SOmething Went Wrong..")
-          })
-          
+        (err : HttpErrorResponse)=>{
+            this.showProperMessage(err)
           return throwError(err)
         }
       )
     )
   }
+
+
+  showProperMessage(err : HttpErrorResponse){
+    console.log(this.router.url);
+    
+    if(this.router.url.includes('login')){
+      this.message.show('Invalid Email Or Password !!')
+      return 
+    }
+
+    if(err.status == 401){
+      this.message.show('Session Expired.. Please Login Again !!')
+      this.router.navigate(['login'] , {
+        queryParams : {
+          'returnUrl' : this.router.url
+        }
+      })
+      return 
+    }
+   
+  }
+
+
 }
