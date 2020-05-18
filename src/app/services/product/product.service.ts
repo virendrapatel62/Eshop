@@ -7,7 +7,7 @@ import { Product } from 'src/app/models/products';
   providedIn: 'root'
 })
 export class ProductService {
-  productUrl = 'http://localhost/api/products'
+  productUrl = '/api/products'
   constructor(private http: HttpClient, private userService: UserService) { }
 
   getAllProducts(params) {
@@ -28,12 +28,8 @@ export class ProductService {
     console.log(query.toString());
 
 
-    return this.http.get(`${this.productUrl}?${query.toString()}`,
-      {
-        headers: {
-          'authorization': this.userService.getToken()
-        }
-      })
+    return this.http.get(`${this.productUrl}?${query.toString()}`
+      )
       .pipe(
         map((result: { count: number, products: Product[] }) => {
           return result.products
@@ -44,12 +40,7 @@ export class ProductService {
 
   // get producy by ID
   getProductById(id: string) {
-    return this.http.get(`${this.productUrl}/${id}`,
-      {
-        headers: {
-          'authorization': this.userService.getToken()
-        }
-      })
+    return this.http.get(`${this.productUrl}/${id}`)
       .pipe(
         map((result) => {
           return <Product>result
@@ -61,16 +52,8 @@ export class ProductService {
   // saveing product
   // get producy by ID
   saveProduct(data : FormData) {
-    let headers = new HttpHeaders({
-      'authorization': this.userService.getToken()
-    })
-    console.log(this.userService.getToken());
-    console.log(headers.get('authorization'));
-    
-    return this.http.post(this.productUrl, data , 
-      {
-        headers
-      })
+   
+    return this.http.post(this.productUrl, data)
       .pipe(
         map((result : {message : string , product : Product}) => {
           return <Product>result.product
@@ -82,15 +65,9 @@ export class ProductService {
 
   // update 
   updateProduct(data , id) {
-    let headers = new HttpHeaders({
-      'authorization': this.userService.getToken()
-    })
+
     
-    
-    return this.http.patch(this.productUrl + '/' + id, data , 
-      {
-        headers
-      })
+    return this.http.patch(this.productUrl + '/' + id, data)
   }
 
 }

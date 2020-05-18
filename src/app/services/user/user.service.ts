@@ -11,10 +11,10 @@ export class UserService {
 
 
 
-  private getAllUsersUrl = "http://localhost/api/users";
-  private userSignupUrl = "http://localhost/api/users/signup";
-  private userLoginUrl = "http://localhost/api/users/login";
-  private isAdminUrl = "http://localhost/api/users/is-admin";
+  private getAllUsersUrl = "/api/users";
+  private userSignupUrl = "/api/users/signup";
+  private userLoginUrl = "/api/users/login";
+  private isAdminUrl = "/api/users/is-admin";
   private _loginObservable : BehaviorSubject<Object>;
   
   constructor(private http : HttpClient) { 
@@ -52,10 +52,8 @@ export class UserService {
 
 
   isAdmin(){
-    let headers = new HttpHeaders({
-      'authorization' : this.getToken()
-    })
-    return this.http.get(this.isAdminUrl ,{ headers }).pipe(
+   
+    return this.http.get(this.isAdminUrl).pipe(
       map(result=>{
         return <boolean>result
       })
@@ -73,10 +71,8 @@ export class UserService {
 
  // get All 
   getAll(){
-    let headers = new HttpHeaders({
-      'authorization': this.getToken()
-    })
-    return this.http.get(this.getAllUsersUrl , {headers})
+  
+    return this.http.get(this.getAllUsersUrl)
     .pipe(
       map((result : {users : User[]})=>{
          return result.users

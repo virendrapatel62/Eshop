@@ -8,21 +8,17 @@ import { Order } from 'src/app/models/order';
   providedIn: 'root'
 })
 export class OrderService {
-  orderUrl = 'http://localhost/api/orders'
+  orderUrl = '/api/orders'
   
   constructor(private http : HttpClient , private userService : UserService ) { }
 
   placeOrder(orderInfo : OrderInfo){
-    let headers = new HttpHeaders({
-      'authorization' : this.userService.getToken()
-    })
-    return this.http.post(this.orderUrl , orderInfo , {headers} )
+   
+    return this.http.post(this.orderUrl , orderInfo  )
   }
   changeStatus(data : {status : string} , orderId : string){
-    let headers = new HttpHeaders({
-      'authorization' : this.userService.getToken()
-    })
-    return this.http.patch(this.orderUrl+'/'+orderId , data , {headers} )
+   
+    return this.http.patch(this.orderUrl+'/'+orderId , data  )
   }
   
   getUserOrders(all ?: boolean ){
@@ -30,10 +26,8 @@ export class OrderService {
     if(all){
       url = url + '?all=true'
     }
-    let headers = new HttpHeaders({
-      'authorization' : this.userService.getToken()
-    })
-    return this.http.get(url, {headers} ).pipe(
+   
+    return this.http.get(url).pipe(
       map((result : {count : number , orders : Order[]})=>{
         return result.orders
       }

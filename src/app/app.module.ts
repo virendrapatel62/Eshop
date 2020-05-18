@@ -13,7 +13,7 @@ import { UserOrdersComponent } from './components/user-orders/user-orders.compon
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ProductQuantityComponent } from './components/product-quantity/product-quantity.component'
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
@@ -24,6 +24,7 @@ import { AdminNewProductComponent } from './components/admin/admin-new-product/a
 import { AdminCustomersComponent } from './components/admin/admin-customers/admin-customers.component';
 import { AdminDashboardCardComponent } from './components/admin/admin-dashboard-card/admin-dashboard-card.component';
 import { ChartsModule } from 'ng2-charts';
+import { HeaderInterceptorService } from './interceptor/header-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,9 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     ModalModule.forRoot(), ChartsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
