@@ -1,10 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../services/user/user.service';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { NotificationService } from '../services/notification/notification.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ProgressService } from '../services/progress/progress.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,20 @@ export class HeaderInterceptorService implements HttpInterceptor{
  
   constructor(private userService : UserService , 
     private message : NotificationService , 
+    private loader : ProgressService, 
     private router : Router) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+    this.loader.show()
    
+    // adding header
     let header = req.headers.set('authorization' ,
      this.userService.getToken())
     let r = req.clone({
       headers : header
     })
+
+    // handle
     return next.handle(r).pipe(
       map(result=>{
         console.log(result);
@@ -33,6 +40,10 @@ export class HeaderInterceptorService implements HttpInterceptor{
           return throwError(err)
         }
       )
+      , 
+      finalize(()=>{
+        this.loader.hide()
+      })
     )
   }
 

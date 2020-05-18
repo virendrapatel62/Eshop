@@ -24,6 +24,7 @@ import { AdminNewProductComponent } from './components/admin/admin-new-product/a
 import { AdminCustomersComponent } from './components/admin/admin-customers/admin-customers.component';
 import { AdminDashboardCardComponent } from './components/admin/admin-dashboard-card/admin-dashboard-card.component';
 import { ChartsModule } from 'ng2-charts';
+import {MatProgressBarModule} from '@angular/material/progress-bar'
 import {MatSnackBarModule} from '@angular/material/snack-bar'
 import { HeaderInterceptorService } from './interceptor/header-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -54,6 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule , 
     HttpClientModule,
     MatSnackBarModule,
+    MatProgressBarModule,
     ModalModule.forRoot(), ChartsModule, BrowserAnimationsModule
   ],
   providers: [
