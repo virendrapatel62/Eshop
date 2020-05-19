@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { UserOrdersComponent } from './components/user-orders/user-orders.component';
-import { CartComponent } from './components/cart/cart.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { LoginComponent } from './components/login/login.component';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
-import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
-import { AdminNewProductComponent } from './components/admin/admin-new-product/admin-new-product.component';
-import { AdminCustomersComponent } from './components/admin/admin-customers/admin-customers.component';
-import { UserAuthGuardService } from './auth-guard/user-auth-guard.service';
-import { AdminAuthGuardService } from './auth-guard/admin-auth-guard.service';
+import { HomeComponent } from 'src/app/core/components/home/home.component';
+import { UserOrdersComponent } from 'src/app/user/components/user-orders/user-orders.component';
+import { CartComponent } from 'src/app/user/components/cart/cart.component';
+import { SignupComponent } from 'src/app/core/components/signup/signup.component';
+import { LoginComponent } from 'src/app/core/components/login/login.component';
+import { AdminHomeComponent } from 'src/app/admin/components/admin/admin-home/admin-home.component';
+import { AdminDashboardComponent } from 'src/app/admin/components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminProductsComponent } from 'src/app/admin/components/admin/admin-products/admin-products.component';
+import { AdminOrdersComponent } from 'src/app/admin/components/admin/admin-orders/admin-orders.component';
+import { AdminNewProductComponent } from 'src/app/admin/components/admin/admin-new-product/admin-new-product.component';
+import { AdminCustomersComponent } from 'src/app/admin/components/admin/admin-customers/admin-customers.component';
+import { UserAuthGuardService } from 'src/app/shared/auth-guard/user-auth-guard.service';
+import { AdminAuthGuardService } from 'src/app/shared/auth-guard/admin-auth-guard.service';
 
 
 const routes: Routes = [
