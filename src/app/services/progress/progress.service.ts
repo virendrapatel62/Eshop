@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ProgressService {
-  private _loaderObservable : BehaviorSubject<boolean>  = new BehaviorSubject(true); 
+  private _loaderObservable : BehaviorSubject<boolean>  = new BehaviorSubject(false); 
   constructor() { }
   
   public get loaderObservable() {
