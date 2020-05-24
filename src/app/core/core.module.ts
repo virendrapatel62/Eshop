@@ -9,7 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserModule } from '../user/user.module';
 import { SharedModule } from '../shared/shared.module';
-
+import {CollapseModule} from 'ngx-bootstrap/collapse'
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     SharedModule,
     UserModule,
-    CoreRoutingModule
+    CoreRoutingModule, 
+    CollapseModule.forRoot()
   ] 
   , 
   exports :[HomeComponent , HeaderComponent,

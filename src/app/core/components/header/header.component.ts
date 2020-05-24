@@ -11,6 +11,7 @@ import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular
 export class HeaderComponent implements OnInit {
   numberOfItems : number = 0 ;
   isLoggedIn = false;
+  isCollapsed = false;
   isAdminUrl = false;
   isAdmin$
   constructor(private cartService : CartService ,
