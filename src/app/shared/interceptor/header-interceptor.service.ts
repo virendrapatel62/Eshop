@@ -6,6 +6,7 @@ import { of, throwError } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification/notification.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { ProgressService } from 'src/app/shared/services/progress/progress.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,15 @@ export class HeaderInterceptorService implements HttpInterceptor{
     private router : Router) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
+    
     this.loader.show()
    
     // adding header
     let header = req.headers.set('authorization' ,
      this.userService.getToken())
     let r = req.clone({
-      headers : header
+      headers : header, 
+    url : environment.apiUrl + req.url
     })
 
     // handle

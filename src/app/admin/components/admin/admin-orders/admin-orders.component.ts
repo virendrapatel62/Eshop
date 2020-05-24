@@ -3,6 +3,7 @@ import { OrderService } from 'src/app/shared/services/order/order.service';
 import { Observable } from 'rxjs';
 import { Order } from 'src/app/shared/models/order';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-admin-orders',
@@ -10,7 +11,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./admin-orders.component.css']
 })
 export class AdminOrdersComponent implements OnInit {
-
+  apiUrl = environment.apiUrl
   modelRef: BsModalRef
   selectedOrder : Order 
 

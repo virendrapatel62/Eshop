@@ -4,6 +4,7 @@ import { Product } from 'src/app/shared/models/products';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { Category } from 'src/app/shared/models/category';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-admin-products',
@@ -12,11 +13,13 @@ import { Category } from 'src/app/shared/models/category';
 })
 export class AdminProductsComponent implements OnInit {
 
+  apiUrl :string = environment.apiUrl
   products : Product[] = []
   categorySubscription: any;
   categories: Category[];
   selectedProduct : Product
   modalRef: BsModalRef;
+  
   
   constructor(private productService : ProductService  ,
     private categoryService : CategoryService,  

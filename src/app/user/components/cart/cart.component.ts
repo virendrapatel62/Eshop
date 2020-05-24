@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { OrderInfo, ProductInfo, OrderService } from 'src/app/shared/services/order/order.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 
 interface CartItem {
   product: Product
@@ -19,6 +20,7 @@ interface CartItem {
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  apiUrl = environment.apiUrl
 
   cart;
   total = 0

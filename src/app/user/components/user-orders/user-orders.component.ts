@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { Order } from 'src/app/shared/models/order';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-user-orders',
@@ -10,7 +11,7 @@ import { Order } from 'src/app/shared/models/order';
 export class UserOrdersComponent implements OnInit {
   orders : Order[] = [];
   constructor(private orderService : OrderService ) { }
-
+  apiUrl = environment.apiUrl
   ngOnInit(): void {
     this.collectOrders()
   }
